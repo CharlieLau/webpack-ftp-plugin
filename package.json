@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/CharlieLau/webpack-ftp-plugin.git"
   },
-  "author": "charlielau",
+  "author": "charlie_lau",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/CharlieLau/webpack-ftp-plugin/issues"
