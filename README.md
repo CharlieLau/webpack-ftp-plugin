@@ -3,10 +3,7 @@
 # webpack-ftp-plugin
 
 
-
-
-<p align="center"><img width="600px" src="http://owzieh3tb.bkt.clouddn.com/autoformdevtool.jpeg" alt="实例"></p>
-
+<p align="center"><img width="600px" src="http://owzieh3tb.bkt.clouddn.com/ftp-plugin.png" alt="实例"></p>
 
 ### Usage
 
@@ -43,6 +40,19 @@ var webpackConfig = {
     deployPath: './build'
 }))]
 }
+```
+
+### 注意事项
+ 
+ env支持，production生产环境才能deploy
+-----------
+process.env.NODE_ENV === 'production':
+
+
+```javascript
+new webpack.DefinePlugin({
+    'process.env.NODE_ENV': JSON.stringify('production')
+})
 ```
 
 ### License

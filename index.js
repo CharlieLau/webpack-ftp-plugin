@@ -20,9 +20,7 @@ function FtpWebpackPlugin(options) {
 FtpWebpackPlugin.prototype.apply = function (compiler) {
     var self = this;
     compiler.plugin("done", function (compilation) {
-
-
-        console.log(process.env.NODE_ENV)
+        
         if (process.env.NODE_ENV === 'production') {
             Ftp({
                 remoteRoot: self.options.remoteRoot,
