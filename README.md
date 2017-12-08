@@ -16,10 +16,10 @@ Basic Usage
 ```javascript
     {
         "authKey": {
-            "username": "virtual",
-            "password": "yifanfengshun123"
+            "username": "xx",
+            "password": "xxx"
         },
-        "host": "10.4.233.175",
+        "host": "x.x.x.x",
         "port": "21"
     }
 ```
