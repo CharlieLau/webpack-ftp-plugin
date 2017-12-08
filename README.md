@@ -10,8 +10,17 @@
 
 Basic Usage
 -----------
+1. 安装
 
-1. 在项目根目录 需要添加个ftp验证文件 文件名：.ftppass
+```
+     $  npm i webpack-ftp-plugin
+```
+或是
+```
+    $  yarn  add --dev  webpack-ftp-plugin
+```
+
+2. 在项目根目录 需要添加个ftp验证文件 文件名：.ftppass
   格式如下 ：
 ```javascript
     {
@@ -24,7 +33,7 @@ Basic Usage
     }
 ```
 
-2. add the plugin to your webpack config as follows:
+3. add the plugin to your webpack config as follows:
 
 ```javascript
 var WebpackFtpPlugin = require('webpack-sft-plugin')
