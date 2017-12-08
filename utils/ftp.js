@@ -60,6 +60,17 @@ module.exports = function (options) {
 
     var locations = _.keys(toTransfer);
 
+
+    //根据目录排序 依次创建目录 不然出问题
+    locations = locations.sort(function (a, b) {
+
+        var alen = a.split(path.sep).length;
+        var blen = b.split(path.sep).length;
+
+        return alen - blen >= 0
+    });
+
+
     async.eachSeries(locations, ftpProcessLocation, function () {
         ftp.raw('quit', function (err) {
             if (err) {
