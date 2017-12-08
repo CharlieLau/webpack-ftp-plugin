@@ -36,7 +36,7 @@ Basic Usage
 3. add the plugin to your webpack config as follows:
 
 ```javascript
-var WebpackFtpPlugin = require('webpack-sft-plugin')
+var WebpackFtpPlugin = require('webpack-ftp-plugin')
 var webpackConfig = {
   entry: 'index.js',
   output: {
