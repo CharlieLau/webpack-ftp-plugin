@@ -43,11 +43,11 @@ var webpackConfig = {
     path: 'dist',
     filename: 'index_bundle.js'
   },
-  plugins: [new WebpackFtpPlugin(new GearFtpPlugin({
+  plugins: [new WebpackFtpPlugin({
     remoteRoot: '/',
     localRoot: __dirname,
     deployPath: './build'
-}))]
+})]
 }
 ```
 
