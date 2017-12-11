@@ -28,13 +28,15 @@ module.exports = function (options) {
         },
         remoteRoot: '',
         localRoot: __dirname,
-        deployPath: ''
+        deployPath: '',
+        cb: null
     }
 
 
     if (options) {
 
         conf = _.assign(_default, options);
+        conf.cb = options.cb;
     }
 
     if (!exists(path.resolve('.ftppass'))) {
@@ -67,20 +69,64 @@ module.exports = function (options) {
         var alen = a.split(path.sep).length;
         var blen = b.split(path.sep).length;
 
-        return alen - blen >= 0
+        return alen - blen > 0
     });
 
 
-    async.eachSeries(locations, ftpProcessLocation, function () {
-        ftp.raw('quit', function (err) {
-            if (err) {
-                console.error(err);
-            } else {
-                console.info('FTP upload done!'.green);
-            }
+    var combi = path.join(conf.remoteRoot, conf.deployPath);
+
+    var arr_remote_path = combi.split(path.sep).filter(function (item) {
+        return item !== '';
+    });
+
+    // var re_arr_remote_path = [];
+    // while (arr_remote_path.length) {
+    //     re_arr_remote_path.push(arr_remote_path.join(path.sep));
+    //     arr_remote_path.pop();
+    // }
+
+    // re_arr_remote_path = re_arr_remote_path.reverse();
+
+    async.eachSeries(arr_remote_path, mkd_remote, function () {
+        console.info('remote 文件夹创建玩完成.'.red);
+        // ftp.raw('cwd', '/', function (err) {
+
+        console.info('开始文件上传任务.'.red);
+
+        async.eachSeries(locations, ftpProcessLocation, function () {
+            ftp.raw('quit', function (err) {
+                if (err) {
+                    console.error(err);
+                } else {
+
+                    if (conf.cb) {
+                        conf.cb.call(null);
+                    }
+                    console.info('FTP upload done!'.green);
+                }
+            });
         });
-    });
 
+        // });
+    });
+}
+
+function mkd_remote(remoteRoot, cb) {
+    ftp.raw('cwd', remoteRoot, function (err) {
+        if (err) {
+            ftp.raw('mkd', remoteRoot, function (err) {
+                if (err) {
+                    console.info('Error creating new remote folder ' + remoteRoot + ' --> ' + err);
+                    cb(err);
+                } else {
+                    console.info('New remote folder created ' + remoteRoot);
+                    mkd_remote(remoteRoot, cb);
+                }
+            });
+        } else {
+            cb(null);
+        }
+    })
 }
 
 
@@ -133,6 +179,7 @@ function dirParseSync(startDir, result) {
 }
 
 function ftpCwd(inPath, cb) {
+    console.log(inPath)
     ftp.raw('cwd', inPath, function (err) {
         if (err) {
             ftp.raw('mkd', inPath, function (err) {
@@ -169,7 +216,6 @@ function ftpProcessLocation(inPath, cb) {
     if (!toTransfer[inPath]) {
         cb(new Error('Data for ' + inPath + ' not found'));
     }
-
     ftpCwd(path.normalize('/' + conf.remoteRoot + '/' + inPath).replace(/\\/gi, '/'), function (err) {
         var files;
 
