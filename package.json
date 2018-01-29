@@ -16,7 +16,7 @@
     "url": "https://github.com/CharlieLau/webpack-ftp-plugin/issues"
   },
   "homepage": "https://github.com/CharlieLau/webpack-ftp-plugin#readme",
-  "devDependencies": {
+  "dependencies": {
     "async": "^2.6.0",
     "colors": "^1.1.2",
     "iconv-lite": "^0.4.19",
